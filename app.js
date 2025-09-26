@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken';
 import pkg from 'pg'
 const {Client} = pkg;
 
-const app = express()
-app.use(express.json())
-const PORT = 8000
+const app = express() //Instancia / objeto al que se hara referencia para hacer TODO.
+app.use(express.json()) //Traduce las cosas que llegan en el body a un formato .json interpretable por js
+const PORT = 8000 //se define el puerto de escucha
 
 
 app.get('/', (req, res) => {
