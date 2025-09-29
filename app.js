@@ -34,12 +34,14 @@ app.post('/crearusuario', async (req, res) => {
   const userid = req.body.userid;
   const nombre = req.body.nombre;
   const password = req.body.password;
+  const rol = req.body.Rol;
+  console.log(`Rol equivale a: `, rol)
   const contraseñaHasheada = await bcrypt.hash(password, 10)
   const client = new Client(config);
   await client.connect();
-  let result = await client.query(`INSERT INTO "USUARIO" (id, nombre, password) VALUES ($1, $2, $3)`, [userid, nombre, contraseñaHasheada]);
+  let result = await client.query(`INSERT INTO "USUARIO" (id, nombre, password, "Rol") VALUES ($1, $2, $3, $4)`, [userid, nombre, contraseñaHasheada, rol]);
   await client.end();
-  res.send("Registro Existoso");
+  res.send(`Registro Existoso ${rol}`);
 
 })
 
