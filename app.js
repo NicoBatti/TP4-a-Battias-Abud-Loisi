@@ -3,6 +3,7 @@ import express from "express";
 import 'dotenv/config'
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
+import {verifyToken} from "D:\COMPU\Documents\Downloads\ORT NICO\TIC\SOFTWARE\TP4-a-Battias-Abud-Loisi\middlewares>"
 
 import pkg from 'pg'
 const {Client} = pkg;
@@ -18,6 +19,13 @@ app.get('/', (req, res) => {
 
 app.get('/about', (req, res) => {
   res.send('About route 🎉 ')
+})
+//TODO: Nico, tenes que seguir haciendo este get para probar el verifyToken y corregir si hay errores
+app.get('/pruebaToken', verifyToken, (req, res)=>{
+  res.json({ 
+        message: "✅ Token válido. ¡Acceso concedido!",
+        user: req.user // Muestra el payload adjunto por el middleware
+    });
 })
 //GET a todas las tablas:
 app.get('/canciones', async (req, res) => {

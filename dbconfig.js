@@ -10,5 +10,10 @@ export const config = {
     user:process.env.PGUSER,
     password:process.env.PGPASSWORD,
     port:5432,
-    ssl: true
+    ssl: {
+        // En muchos casos, basta con poner 'true'
+        // Pero para Neon, a veces es necesario especificar 'rejectUnauthorized: false'
+        // si usas una conexión simple sin archivos de certificado locales.
+        rejectUnauthorized: false
+    }
 }
