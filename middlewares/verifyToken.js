@@ -18,9 +18,9 @@ export function verifyToken(req, res, next) {
 
     try {
         // VERIFICACIÓN: Decodifica y valida el token
-        const payload = jwt.verify(token, secretKey);
-        
+        let payload = jwt.verify(token, secretKey);
         // ASIGNACIÓN: Adjunta la identidad a req.user (cumpliendo la consigna)
+        payload = payload.userid; 
         req.user = payload;
         console.log(`El payload del usuario con ese token es: ${payload}`)
         // CONTINUAR: Pasa al siguiente middleware o ruta
