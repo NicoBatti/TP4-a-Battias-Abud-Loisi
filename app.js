@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
   res.send('About route 🎉 ')
 })
-//TODO: Nico, tenes que seguir haciendo este get para probar el verifyToken y corregir si hay errores
+
 app.get('/pruebaToken', verifyToken, verifyAdmin,(req, res)=>{
   res.json({ 
         message: "✅ Token válido. ¡Acceso concedido!",
