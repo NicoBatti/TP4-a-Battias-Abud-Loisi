@@ -22,3 +22,7 @@ export const escucho = async (req, res) => {
     const result = await escuchaService.escucho(payload);
     res.send(result.rows);
 }
+
+export const grabarEscucha = async (req,res) => {
+    //TODO:
+}

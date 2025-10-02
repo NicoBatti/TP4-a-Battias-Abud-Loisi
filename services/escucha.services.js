@@ -15,3 +15,7 @@ export const escucho = async (payload) => {
         throw new Error("Error en la base de datos " + error.message)
     }
 }
+
+export const grabarEscucha = async (cancionId) => {
+    //TODO:
+}

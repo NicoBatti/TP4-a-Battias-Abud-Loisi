@@ -7,4 +7,6 @@ const router = Router();
 
 router.get('/escucho', escuchaController.escucho);
 
+router.post('/escucho', escuchaController.grabarEscucha);
+
 export default router;

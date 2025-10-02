@@ -44,6 +44,36 @@ export const agregarCancion = async (nombre) => {
     }
 }
 
-export const putCancion = async (id, nombre) => {
+export const putCancion = async (idCancion, nuevosDatos) => {
     //SQL
+    let client;
+    try{
+        client = new Client(config);
+        await client.connect();
+        const result = await client.query('UPDATE "CANCION" SET nombre = $2 WHERE id = $1', [idCancion, nuevosDatos.nombre]);
+        await client.end();
+        return result;
+    }catch(error){
+        if (client){
+            client.end();
+        }
+        throw new Error("Error en base de datos: " + error.message);
+        }
+}
+
+export const deleteCancion = async (idCancion) => {
+    //SQL
+    let client;
+    try{
+        client = new Client(config);
+        await client.connect();
+        const result = await client.query('DELETE FROM "CANCION" WHERE id = $1', [idCancion]);
+        await client.end();
+        return result;
+    }catch(error){
+        if (client){
+            client.end();
+        }
+        throw new Error("Error en base de datos: " + error.message);
+        }
 }

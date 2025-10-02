@@ -11,4 +11,6 @@ router.post('/cancion',verifyToken, verifyAdmin, cancionesController.agregarCanc
 
 router.put('/:id',verifyToken, verifyAdmin, cancionesController.putCancion)
 
+router.delete('/:id',verifyToken, verifyAdmin, cancionesController.deleteCancion)
+
 export default router;
