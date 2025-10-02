@@ -20,9 +20,9 @@ app.get('/about', (req, res) => {
     res.send('About route 🎉 ')
 })
 
-//USUARIOS ✅
+
 app.use('/usuarios', usuariosRouter)
-//ESCUCHA ✅
+
 app.use('/escucha', escuchaRouter)
 
 app.use('/canciones', cancionesRouter)

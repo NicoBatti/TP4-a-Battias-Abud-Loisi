@@ -7,4 +7,8 @@ const router = Router();
 
 router.get('/canciones', cancionesController.canciones)
 
+router.post('/cancion',verifyToken, verifyAdmin, cancionesController.agregarCancion)
+
+router.put('/:id',verifyToken, verifyAdmin, cancionesController.putCancion)
+
 export default router;

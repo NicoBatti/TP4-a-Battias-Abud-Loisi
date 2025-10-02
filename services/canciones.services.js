@@ -3,16 +3,47 @@ import pkg from "pg";
 const {Client} = pkg;
 
 export const canciones = async () =>{
+    
+    let client; // <--- Declaración ÚNICA
+
+    try{
+        client = new Client(config);
+        
+        await client.connect();
+        const result = await client.query('SELECT * from "CANCION"');
+        await client.end();
+        
+        //Si hay un error de DB, lo lanzamos.
+        return result; 
+
+    } catch(error) {
+        // 3. El catch SIEMPRE PUEDE ACCEDER a 'client' (si fue asignado)
+        if (client) { 
+            await client.end(); 
+        }
+        
+        // El Controller lanza el error final.
+        throw new Error("Hubo un error en la base de datos: " + error.message);
+    }
+}
+
+export const agregarCancion = async (nombre) => {
+    //SQL
     let client;
     try{
-    const client = Client(config);
-    await client.connect();
-    const result = await client.query('select * from "CANCION"');
-    await client.end();
-    console.log(result);
-    return result
+        client = new Client(config);
+        await client.connect();
+        const result = await client.query('INSERT INTO "CANCION" (nombre) VALUES ($1)', [nombre]);
+        await client.end();
+        return result
     }catch(error){
-        client.end();
-        throw new Error("Hubo un error en la base de datos " + error.message)
+        if (client){
+            client.end();
+        }
+        throw new Error("Hubo un error en la base de datos: " + error.message)
     }
+}
+
+export const putCancion = async (id, nombre) => {
+    //SQL
 }
