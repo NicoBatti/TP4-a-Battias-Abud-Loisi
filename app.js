@@ -67,7 +67,7 @@ app.post('/login', async (req, res) => {
         let result = await client.query(`select * from "USUARIO" where id=$1`,[user.userid]);
         if (result.rowCount === 0) {
             return res.status(404).json({ message: "Usuario no encontrado" });
-        }
+          }
         await client.end();
         let dbUser = result.rows[0];
         const passOK = await bcrypt.compare(user.password, dbUser.password);
@@ -98,6 +98,7 @@ app.get('/escucho', async (req, res) => {
     console.log("Payload:", payload);
 
 //    res.json({ message: "Token válido", payload });
+// Por si el token no coincide
   } catch (err) {
     res.status(403).json({ message: "Token inválido" });
   }

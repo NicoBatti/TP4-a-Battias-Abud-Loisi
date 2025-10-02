@@ -1,11 +1,10 @@
 import { Router } from "express";
-import * as usuariosController from "../controllers/usuarios.controller.js"
+import * as cancionesController from "../controllers/canciones.controller.js"
 import { verifyToken } from "../middlewares/verifyToken.js";
 import { verifyAdmin } from "../middlewares/verifyAdmin.js";
 
 const router = Router();
 
-router.post('/crearusuario', usuariosController.crearUsuario);
-router.post('/login', usuariosController.login);
+router.get('/canciones', cancionesController.canciones)
 
 export default router;
