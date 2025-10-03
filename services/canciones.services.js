@@ -60,7 +60,7 @@ export const putCancion = async (idCancion, nuevosDatos) => {
         throw new Error("Error en base de datos: " + error.message);
         }
 }
-
+///Aguante python
 export const deleteCancion = async (idCancion) => {
     //SQL
     let client;
