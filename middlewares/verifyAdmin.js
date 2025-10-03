@@ -6,7 +6,7 @@ const {Client} = pkg;
 export async function verifyAdmin(req, res, next){
     try{
         const client = new Client(config);
-        const userid = req.user;
+        const userid = req.body.user;
         await client.connect();
         let result = await client.query('SELECT "Rol" FROM "USUARIO" WHERE id = $1', [userid])
         await client.end();
