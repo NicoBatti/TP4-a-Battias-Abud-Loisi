@@ -28,6 +28,7 @@ export function verifyToken(req, res, next) {
         
     } catch (error) {
         // ERROR 403: El token es inválido (expirado, modificado, etc.)
+        console.log(error.message);
         return res.status(403).json({ message: "Token inválido o expirado." });
     }
 }
