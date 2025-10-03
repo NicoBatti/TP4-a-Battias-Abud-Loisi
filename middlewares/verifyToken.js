@@ -21,7 +21,7 @@ export function verifyToken(req, res, next) {
         let payload = jwt.verify(token, secretKey);
         // ASIGNACIÓN: Adjunta la identidad a req.user (cumpliendo la consigna)
         payload = payload.userid; 
-        req.user = payload;
+        req.body.user = payload;
         console.log(`El payload del usuario con ese token es: ${payload}`)
         // CONTINUAR: Pasa al siguiente middleware o ruta
         next(); 

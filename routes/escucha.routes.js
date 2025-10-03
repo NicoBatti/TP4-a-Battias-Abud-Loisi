@@ -5,8 +5,6 @@ import { verifyAdmin } from "../middlewares/verifyAdmin.js";
 
 const router = Router();
 
-router.get('/escucho', escuchaController.escucho);
-
-router.post('/escucho', escuchaController.grabarEscucha);
+router.post('/escucho',verifyToken, escuchaController.grabarEscucha);
 
 export default router;
