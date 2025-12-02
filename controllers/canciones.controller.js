@@ -3,7 +3,7 @@ import * as cancionService from "../services/canciones.services.js"
 export const canciones = async (req, res) =>{
     try{
         const result = await cancionService.canciones();
-        res.send(result.rows)}
+        res.send(result)}
         catch(error){
             return res.status(500).json({message: "Error al obtener canciones: " + error.message})
     }

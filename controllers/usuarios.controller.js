@@ -35,20 +35,19 @@ export const login = async (req,res) => {
         return res.status(400).json({ message: "Debe completar todos los campos" });
     }
     try{
-        const result = await usuariosService.login(user);
-        if (result.rowCount === 0) {
+        const dbUser = await usuariosService.login(user);
+        if (!dbUser) {
                 return res.status(404).json({ message: "Usuario no encontrado" });
             }
-        let dbUser = result.rows[0];
-                const passOK = await bcrypt.compare(user.password, dbUser.password);
-                if (passOK) {
-                    const payload = { userid: user.userid };
-                    const options = { expiresIn: '1h' }; // Expirará en 1 hora. 60
-                    const token = jwt.sign(payload, secretKey, options);
-                    res.send({nombre: dbUser.nombre, token: token})
-                } else {
-                    res.send("Clave invalida")
-                    }
+        const passOK = await bcrypt.compare(user.password, dbUser.password);
+        if (passOK) {
+            const payload = { userid: user.userid };
+            const options = { expiresIn: '1h' }; // Expirará en 1 hora. 60
+            const token = jwt.sign(payload, secretKey, options);
+            res.send({nombre: dbUser.nombre, token: token})
+        } else {
+            res.status(401).json({ message: "Clave invalida" })
+        }
     }catch(error){
         return res.status(500).json({ message: error.message });
     }

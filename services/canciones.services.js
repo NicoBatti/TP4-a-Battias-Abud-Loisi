@@ -17,7 +17,8 @@ export const canciones = async () => {
 
 export const agregarCancion = async (nombre) => {
     try {
-        const result = await Cancion.create({ nombre });
+        const maxId = await Cancion.max('id') || 0;
+        const result = await Cancion.create({ id: maxId + 1, nombre });
         return result;
     } catch (error) {
         throw new Error("Hubo un error en la base de datos: " + error.message);
