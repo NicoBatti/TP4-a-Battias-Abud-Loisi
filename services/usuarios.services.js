@@ -1,32 +1,27 @@
-import { config } from "../dbconfig.js"; 
-import pkg from "pg";
-const {Client} = pkg;
+import { sequelize } from "../dbconfig.js";
+import { DataTypes } from "sequelize";
+
+const Usuario = sequelize.define("Usuario", {
+    id: { type: DataTypes.INTEGER, primaryKey: true },
+    nombre: { type: DataTypes.STRING },
+    password: { type: DataTypes.STRING },
+    Rol: { type: DataTypes.STRING },
+}, { tableName: "USUARIO", timestamps: false });
 
 export const crearUsuario = async (id, nombre, contraseñaHasheada, Rol) => {
-    let client;
-    console.log(Rol);
-    try{
-        client = new Client(config);
-        await client.connect();
-        let result = await client.query(`INSERT INTO "USUARIO" (id, nombre, password, "Rol") VALUES ($1, $2, $3, $4)`, [id, nombre, contraseñaHasheada, Rol]);
-        await client.end();
-        return {success: true};
-    }catch(error){
-        await client.end();
-        throw new Error("Error en la base de datos: " + error.message)
+    try {
+        await Usuario.create({ id, nombre, password: contraseñaHasheada, Rol });
+        return { success: true };
+    } catch (error) {
+        throw new Error("Error en la base de datos: " + error.message);
     }
-}
+};
 
 export const login = async (user) => {
-    let client;
     try {
-        const client = new Client(config);
-        await client.connect();
-        let result = await client.query(`select * from "USUARIO" where id=$1`,[user.userid]);
-        await client.end()
+        const result = await Usuario.findOne({ where: { id: user.userid } });
         return result;
-    }catch(error){
-        await client.end()
-        throw new Error("Error en la base de datos: " + error.message)
+    } catch (error) {
+        throw new Error("Error en la base de datos: " + error.message);
     }
-}
+};

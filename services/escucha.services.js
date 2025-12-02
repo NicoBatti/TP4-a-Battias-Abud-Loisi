@@ -1,20 +1,17 @@
-import { config } from "../dbconfig.js"; 
-import pkg from "pg";
-const {Client} = pkg;
+import { sequelize } from "../dbconfig.js";
+import { DataTypes } from "sequelize";
+
+const Escucha = sequelize.define("Escucha", {
+    UsuarioID: { type: DataTypes.INTEGER },
+    CancionID: { type: DataTypes.INTEGER },
+    Reproducciones: { type: DataTypes.INTEGER },
+}, { tableName: "ESCUCHA", timestamps: false });
 
 export const grabarEscucha = async (cancionId, userId) => {
-    let client;
-    console.log(userId)
-    try{
-        client = new Client(config);
-        await client.connect();
-        const result = await client.query('INSERT into "ESCUCHA" ("UsuarioID", "CancionID", "Reproducciones") VALUES ($1, $2, 1)',[userId, cancionId]);
-        await client.end();
+    try {
+        const result = await Escucha.create({ UsuarioID: userId, CancionID: cancionId, Reproducciones: 1 });
         return result;
-    }catch(error){
-        if(client){
-            client.end();
-        }
+    } catch (error) {
         throw new Error("Error en la base de datos " + error.message);
     }
-}
+};
